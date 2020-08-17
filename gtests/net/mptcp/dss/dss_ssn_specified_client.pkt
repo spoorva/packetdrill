@@ -21,6 +21,7 @@
 +0.3  read(3, ..., 1000) = 1000
 +0.0 write(3,..., 100) = 100
 +0.0   > P. 1:101(100) ack 1001 <nop, nop, TS val 100 ecr 700, dss dack8=1001 dsn8=1 ssn=1 dll=100 nocs, nop, nop>
++0.0   < .  1001:1001(0) ack 101 win 450 <dss dack8=101 nocs>
 +0.4 close(3) = 0
-// SSN should be 0 for DATA-FIN packets carrying no data at all
-+0.0   > F. 101:101(0) ack 1001 <nop, nop,TS val 100 ecr 700,dss dack8=1001 dsn8=101 ssn=0 dll=1 nocs fin, nop, nop>
++0.0   > . 101:101(0) ack 1001 <nop, nop,TS val 100 ecr 700,dss dack8=1001 dsn8=101 ssn=0 dll=1 nocs fin, nop, nop>
++0.0   > F. 101:101(0) ack 1001 <nop, nop,TS val 100 ecr 700, dss dack8=1001 dsn8=101 ssn=0 dll=1 nocs fin, nop, nop>
