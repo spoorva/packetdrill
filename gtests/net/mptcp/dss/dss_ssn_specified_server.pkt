@@ -34,4 +34,5 @@
 
 +0   close(4) = 0
 +0     > . 3001:3001(0) ack 11 <dss dack8=11 dsn8=3001 ssn=0 dll=1 nocs fin, nop, nop>
-+0     > F. 3001:3001(0) ack 11 <dss dack8=11 dsn8=3001 ssn=0 dll=1 nocs fin, nop, nop>
++0     < . 11:11(0) ack 3001 win 225 <dss dack8=3002 nocs>
++0     > F. 3001:3001(0) ack 11 <dss dack8=11 nocs>
