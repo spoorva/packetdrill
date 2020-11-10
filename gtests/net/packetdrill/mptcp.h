@@ -40,6 +40,7 @@
 #define MP_PRIO_SUBTYPE 5 // TODO, Change Subflow Priority
 #define MP_FAIL_SUBTYPE 6 // TODO
 #define MP_FASTCLOSE_SUBTYPE 7 // TODO => enhancement
+#define MP_TCPRST_SUBTYPE 8
 
 
 /* MPTCP options subtypes length */
@@ -86,6 +87,8 @@
 #define TCPOLEN_MP_FAIL 12
 // MP_FASTCLOSE
 #define TCPOLEN_MP_FASTCLOSE 12
+// MP_RESET
+#define TCPOLEN_MP_TCPRST 4
 // MPTCP Flags
 #define MP_CAPABLE_FLAGS 1
 #define MP_CAPABLE_FLAGS_CS 129 //With checksum
@@ -106,6 +109,8 @@
 #define MPTCPV1 1
 
 #define MPTCP_VER_DEFAULT MPTCPV1
+
+#define MP_TCPRST_FLAG_T	1
 
 //SUBFLOW states
 #define ESTABLISHED 1 //for Subflow state
