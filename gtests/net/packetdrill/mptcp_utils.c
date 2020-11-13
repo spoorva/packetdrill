@@ -236,7 +236,7 @@ static int linux_af_alg_socket(const char *type, const char *name)
 
 	s = socket(AF_ALG, SOCK_SEQPACKET, 0);
 	if (s < 0) {
-		DEBUGP("%s: Failed to open AF_ALG socket: %s",
+		die("%s: Failed to open AF_ALG socket: %s\n",
 			   __func__, strerror(errno));
 		return -1;
 	}
