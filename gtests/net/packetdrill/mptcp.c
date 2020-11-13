@@ -2178,7 +2178,7 @@ int mptcp_subtype_mp_fastclose(struct packet *packet_to_modify,
 
 	if(dss_opt_script->data.mp_fastclose.receiver_key == UNDEFINED){ // <mp_fastclose>
 		if(direction == DIRECTION_INBOUND)
-			dss_opt_script->data.mp_fastclose.receiver_key = htonll(mp_state.kernel_key);
+			dss_opt_script->data.mp_fastclose.receiver_key = mp_state.kernel_key;
 		else if(direction == DIRECTION_OUTBOUND)
 			dss_opt_script->data.mp_fastclose.receiver_key = dss_opt_live->data.mp_fastclose.receiver_key;
 		else
