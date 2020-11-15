@@ -244,9 +244,9 @@ static int linux_af_alg_socket(const char *type, const char *name)
 	memset(&sa, 0, sizeof(sa));
 	sa.salg_family = AF_ALG;
 	strncpy((char *) sa.salg_type, type, sizeof(sa.salg_type));
-	strncpy((char *) sa.salg_name, name, sizeof(sa.salg_type));
+	strncpy((char *) sa.salg_name, name, sizeof(sa.salg_name));
 	if (bind(s, (struct sockaddr *) &sa, sizeof(sa)) < 0) {
-		DEBUGP("%s: Failed to bind AF_ALG socket(%s,%s): %s",
+		die("%s: Failed to bind AF_ALG socket(%s,%s): %s\n",
 			   __func__, type, name, strerror(errno));
 		close(s);
 		return -1;
