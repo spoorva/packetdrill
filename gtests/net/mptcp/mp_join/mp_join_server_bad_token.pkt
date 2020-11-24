@@ -11,5 +11,5 @@
 +0    bind(3, ..., ...) = 0
 +0    listen(3, 1) = 0
 
-+0.0    <  S   0:0(0)        win 65535  <mss 1460, mp_join_syn address_id=0 token=1>
-+0.0    >  R.  0:0(0) ack 1
++0.0    <  S   0:0(0)         win 65535  <mss 1460, mp_join_syn address_id=0 token=1>
++0.0    >  R.  0:0(0)  ack 1                       <mp_reset 1>

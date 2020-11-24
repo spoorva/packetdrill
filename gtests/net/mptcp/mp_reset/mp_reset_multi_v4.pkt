@@ -1,0 +1,56 @@
+// connection initiated by packetdrill
+--tolerance_usecs=100000
+`../common/defaults.sh`
+
++0    `../common/server.sh`
+
++0    socket(..., SOCK_STREAM, IPPROTO_MPTCP) = 3
++0    setsockopt(3, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
+
++0    bind(3, ..., ...) = 0
++0    listen(3, 1) = 0
++0.0    <  addr[caddr0] > addr[saddr0]  S   0:0(0)                     win 65535  <mss 1460, nop, wscale 7, mpcapable v1 flags[flag_h] nokey>
++0.0    >                               S.  0:0(0)           ack 1                <mss 1460, nop, wscale 8, mpcapable v1 flags[flag_h] key[skey]>
++0.0    <                                .  1:1(0)           ack 1     win 256                             <mpcapable v1 flags[flag_h] key[ckey=2, skey]>
++0    accept(3, ..., ...) = 4
+
+// add_addr
++0.0    >                                .  1:1(0)           ack 1                <add_address addr[saddr1] hmac=auto, dss dack4=1                       dll=0    nocs>
+// +0.0 <                                .  1:1(0)           ack 1     win 256    <add_address addr[saddr1],           dss dack8=1                       dll=0    nocs>
+
++0.2    <                               P.  1:1001(1000)     ack 1     win 450    <nop, nop,                           dss dack8=1    dsn8=1    ssn=1    dll=1000 nocs>
++0.0    >                                .  1:1(0)           ack 1001                                                 <dss dack8=1001 nocs>
+
++0.2    <                               P.  1:1(0)           ack 1     win 450                             <mpcapable v1 flags[flag_h] key[skey, ckey]>
++0.0    >                                .  1:1(0)           ack 1001                                                 <dss dack8=1001 nocs>
+
+// add another subflow.
++0.5    <  addr[caddr1] > addr[saddr1]  S   0:0(0)                     win 65535  <mss 1460, nop, wscale 7, mp_join_syn     address_id=2 token=sha256_32(skey)>
++0.0    >                               S.  0:0(0)           ack 1                <mss 1460, nop, wscale 8, mp_join_syn_ack address_id=0 sender_hmac=auto>
++0.0    <                                .  1:1(0)           ack 1     win 256                             <mp_join_ack                  sender_hmac=auto>
++0.0    >                                .  1:1(0)           ack 1                                                    <dss dack8=1001 nocs>
+
+// send more data.
++0.2    <                               P.  1:1002(1001)     ack 1     win 450                              <nop, nop, dss dack8=1    dsn8=1001 ssn=1    dll=1001 nocs>
++0      >                                .  1:1(0)           ack 1002                                                 <dss dack8=2002                    dll=0    nocs>
+
+// send rst option.  RST is not set, so it should have no effect.
++0      <                                .  1002:1002(0)               win 256    <mp_reset 1>
+
+// again, this time with RST but out of window.
++0.1    <                               R.  3001:3001(0)               win 450    <mp_reset 1>
+// ... expect challenge ack.
++0      >                                .  1:1(0)           ack 1002                                                 <dss dack8=2002                    dll=0    nocs>
+
+// again. RST the 2nd subflow.
++0.1    <                               R.  1002:1002(0)               win 450    <mp_reset 1>
+
+// This should result in a RST, since subflow was closed.
++0.2    <                               P.  1:1002(1001)     ack 1     win 450                              <nop, nop, dss dack8=1    dsn8=1001 ssn=1    dll=1001 nocs>
++0      >                               R   1:1(0)
+
+// More data.
++0.2    <  addr[caddr0] > addr[saddr0]  P.  1001:2003(1002)  ack 1     win 450                              <nop, nop, dss dack8=1    dsn8=2002 ssn=1001 dll=1002 nocs>
+
++1    read(4, ..., 3004) = 3003
++0    close(4) = 0

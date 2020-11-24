@@ -25,7 +25,7 @@
 // send another ack fastclose, this time with matching key
 +0.1     <   .  2001:2001(0)               win 450              <mp_fastclose>
 // expect peer to reset all subflows now:
-+0.01    >  R.  1:1(0)           ack 2001
++0.01    >  R.  1:1(0)           ack 2001                       <mp_reset 0>
 
 // more data, expect a reset and win0 (no socket anymore)
 +1.0     <  P.  2001:3001(1000)  ack 1     win 450    <nop, nop, dss dack8=1    dsn8=2001 ssn=2001 dll=1000 nocs>
