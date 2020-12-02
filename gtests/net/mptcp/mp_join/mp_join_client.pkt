@@ -28,5 +28,5 @@
 +0.0 read (3, ..., 100) = 100
 +0.1 close(3) = 0
 +0.0 > addr[caddr0] > addr[saddr0] . 3:3(0) ack 1 <nop,nop,TS val 4074418292 ecr 4074418293,dss dack8=101 dsn8=3 ssn=0 dll=1 nocs fin,nop,nop>
-+0.0 > addr[caddr0] > addr[saddr1] . 3:3(0) ack 1 <nop,nop,TS val 4074418292 ecr 4074418293,dss dack8=101 dsn8=3 ssn=0 dll=1 nocs fin,nop,nop>
++0.0 > . 1:1(0) ack 101 <nop,nop,TS val 4074418292 ecr 4074418293,dss dack8=101 dsn8=3 ssn=0 dll=1 nocs fin,nop,nop>
 
