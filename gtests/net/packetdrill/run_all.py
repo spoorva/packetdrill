@@ -19,7 +19,7 @@ class TestSet(object):
     self.args = args
     self.tools_path = os.path.abspath('./packetdrill')
     self.default_args = '--send_omit_free'
-    self.max_runtime = 120
+    self.max_runtime = 180
     self.num_pass = 0
     self.num_fail = 0
     self.num_timedout = 0
@@ -150,7 +150,11 @@ class TestSet(object):
 
     self.num_timedout = len(procs)
     for proc, path, variant, outfile, errfile in procs:
-      proc.kill()
+      try:
+        proc.kill()
+      except:
+        if self.args['verbose']:
+          print 'The test process has exited'
       if self.args['verbose']:
         print('KILL [%s (%s)]' % (path, variant))
         if self.args['log_on_error']:

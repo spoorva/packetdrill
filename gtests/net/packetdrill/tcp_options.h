@@ -378,7 +378,7 @@ struct tcp_option {
 		} __packed mp_fastclose;
 		/*******END MPTCP options*********/
 	} data;
-} __packed tcp_option;
+} __packed;
 
 /* Allocate a new options list. */
 extern struct tcp_options *tcp_options_new(void);
