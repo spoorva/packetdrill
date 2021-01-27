@@ -224,7 +224,7 @@ struct mp_state_s {
 
 typedef struct mp_state_s mp_state_t;
 
-mp_state_t mp_state;
+extern mp_state_t mp_state;
 
 void init_mp_state(); //TODO init the initiail_dsn to -1
 
