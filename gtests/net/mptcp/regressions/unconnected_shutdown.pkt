@@ -8,7 +8,7 @@
 +0.0  fcntl(3, F_GETFL) = 0x2 (flags O_RDWR)
 +0.0  fcntl(3, F_SETFL, O_RDWR|O_NONBLOCK) = 0
 
-+0.0 connect(3, ..., ...) = -1 EINPROGRESS (Operation now in progress)
-+0.0   > S 0:0(0) <mss 1460,sackOK,TS val 100 ecr 0,nop,wscale 8,mpcapable v1 flags[flag_h] nokey>
++0.0  connect(3, ..., ...) = -1  EINPROGRESS (Operation now in progress)
++0.0    >  S   0:0(0)  <mss 1460, sackOK, TS val 100 ecr 0, nop, wscale 8, mpcapable v1 flags[flag_h] nokey>
 
-+0.0 shutdown(3, SHUT_WR) = 0
++0.0  shutdown(3, SHUT_WR) = 0

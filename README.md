@@ -66,3 +66,25 @@ chmod u+x checkpatch.pl
 ```
 git send-email --to packetdrill@googlegroups.com 00*.patch
 ```
+
+# MPTCP version
+
+## Code-style
+
+The idea is to easily spot options, direction, by increasing spaces and aligning groups.
+
+Code style for the packet traces:
+* (minimum) 2 spaces between each section: times, syscalls, directions, flags, ACK, Win, options
+* Align all syscalls together: two spaces after the larger time
+* Align TCP flags (S, ., P, F, R)
+* It's OK to align per block, e.g. align for the initiation of the connection but it can be different for the options during a transfer
+* Spaces after commas in TCP options
+* Blank lines between blocks
+
+## Guidelines
+
+* Add load of comments: what the next block is doing and the **reason**
+* No need to put a TCP window for outbound packets (except for 0) to allow env with different auto-tuning settings
+```
+find gtests/net/mptcp/ -name *pkt -exec sed -i -e 's/\(^\S\+\s\+>.*\) win [1-9][0-9]*/\1/' \{\} \;
+```
