@@ -1237,6 +1237,14 @@ bool same_mptcp_opt(struct tcp_option *opt_a, struct tcp_option *opt_b, struct p
 			if(opt_a->data.mp_fastclose.receiver_key != opt_b->data.mp_fastclose.receiver_key)
 				return false;
 			break;
+		case MP_TCPRST_SUBTYPE:
+			if(opt_a->data.mp_tcprst.reason != opt_b->data.mp_tcprst.reason)
+				return false;
+			if(opt_a->data.mp_tcprst.flag_transient != opt_b->data.mp_tcprst.flag_transient)
+				return false;
+			if(opt_a->data.mp_tcprst.reserved_bits != opt_b->data.mp_tcprst.reserved_bits)
+				return false;
+			break;
 		default:
 			return false;
 	}

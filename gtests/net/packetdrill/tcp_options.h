@@ -376,6 +376,25 @@ struct tcp_option {
 	   +---------------------------------------------------------------+
 			 */
 		} __packed mp_fastclose;
+		struct {
+			#if __BYTE_ORDER == __LITTLE_ENDIAN
+			__u8 flag_transient:1, reserved_bits:3;
+			__u8 subtype:4;
+			__u8 reason;
+			#elif __BYTE_ORDER == __BIG_ENDIAN
+			__u8 subtype:4;
+			__u8 reserved_bits:3, flag_transient:1;
+			__u8 reason;
+			#else
+			#error "Adjust your <asm/byteorder.h> defines"
+			#endif
+			/*
+            0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+	   +---------------+---------------+-------+-----------------------+
+	   |     Kind      |    Length     |Subtype|U V W T|    Reason     |
+	   +---------------+---------------+-------+-----------------------+
+			 */
+		} __packed mp_tcprst;
 		/*******END MPTCP options*********/
 	} data;
 } __packed;

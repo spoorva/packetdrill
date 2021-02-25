@@ -845,7 +845,7 @@ struct tcp_option *dss_do_dsn_dack( int dack_type, int dack_val,
 %token <reserved> U32 U64 PTR
 %token <reserved> ACK ECR EOL MSS NOP SACK SACKOK TIMESTAMP VAL WIN WSCALE
 %token <reserved> URG MD5 FAST_OPEN FAST_OPEN_EXP
-%token <reserved> MP_CAPABLE MP_CAPABLE_NO_CS MP_FASTCLOSE FLAG_A FLAG_B FLAG_C FLAG_D FLAG_E FLAG_F FLAG_G FLAG_H NO_FLAGS
+%token <reserved> MP_CAPABLE MP_CAPABLE_NO_CS MP_FASTCLOSE FLAG_A FLAG_B FLAG_C FLAG_D FLAG_E FLAG_F FLAG_G FLAG_H FLAG_T NO_FLAGS
 %token <reserved> MPCAPABLE V0 V1 NOKEY MPCDATALEN
 %token <reserved> MP_JOIN_SYN MP_JOIN_ACK MP_JOIN_SYN_ACK
 %token <reserved> DSS DACK4 DSN4 DACK8 DSN8 FIN SSN DLL NOCS CKSUM ADDR ADDRESS_ID BACKUP TOKEN AUTO RAND
@@ -854,6 +854,7 @@ struct tcp_option *dss_do_dsn_dack( int dack_type, int dack_val,
 %token <reserved> ADD_ADDRESS ADD_ADDR_IPV4 ADD_ADDR_IPV6 PORT MP_FAIL
 %token <reserved> REMOVE_ADDRESS ADDRESSES_ID LIST_ID
 %token <reserved> MP_PRIO
+%token <reserved> MP_TCPRST
 %token <reserved> TOS FLAGS FLOWLABEL
 %token <reserved> ECT0 ECT1 CE ECT01 NO_ECN
 %token <reserved> IPV4 IPV6 ICMP UDP RAW GRE MTU ID
@@ -883,6 +884,8 @@ struct tcp_option *dss_do_dsn_dack( int dack_type, int dack_val,
 %type <integer> opt_mpls_stack_bottom
 %type <integer> opt_icmp_mtu fin ssn dll dss_checksum
 %type <integer> mp_capable_no_cs is_backup address_id rand port
+%type <integer> mptcprst_reason mptcprst_flags_list mptcprst_flags mptcprst_flag
+
 %type <integer> flag_a flag_b flag_c flag_d flag_e flag_f flag_g flag_h no_flags
 %type <integer> mpc_ver mpc_flags_list mpc_flags mpc_flag mpc_keys mpc_data
 %type <integer> gre_flags_list gre_flags gre_flag
@@ -2048,6 +2051,27 @@ mpc_data
 }
 ;
 
+mptcprst_reason
+: INTEGER {
+	if(!is_valid_u8($1))
+		semantic_error("mp_reset: reason code should be a 8 bits unsigned integer.");
+	$$ = $1;
+}
+
+mptcprst_flags_list
+: FLAGS '[' mptcprst_flags ']'	{ $$ = $3; }
+|	{ $$ = 0; }
+;
+
+mptcprst_flags
+: mptcprst_flag			{ $$ = $1; }
+;
+
+mptcprst_flag
+: NO_FLAGS			{ $$ = 0; }
+| FLAG_T			{ $$ = MP_TCPRST_FLAG_T; }
+;
+
 tcp_option
 : NOP              { $$ = tcp_option_new(TCPOPT_NOP, 1); }
 | EOL              { $$ = tcp_option_new(TCPOPT_EOL, 1); }
@@ -2301,6 +2325,14 @@ tcp_option
 	}
 	$$->data.mp_prio.flags = $2;
 	$$->data.mp_capable.subtype = MP_PRIO_SUBTYPE;
+}
+| MP_TCPRST mptcprst_reason mptcprst_flags_list {
+	$$ = tcp_option_new(TCPOPT_MPTCP, TCPOLEN_MP_TCPRST);
+	$$->data.mp_tcprst.reason = $2;
+	$$->data.mp_tcprst.flag_transient = ($3 & MP_TCPRST_FLAG_T);
+	$$->data.mp_tcprst.reserved_bits = ZERO_RESERVED;
+
+	$$->data.mp_capable.subtype = MP_TCPRST_SUBTYPE;
 }
 | MP_FAIL dsn {
 	if($2.type == 4)
