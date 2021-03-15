@@ -2249,8 +2249,8 @@ tcp_option
                 // ipv4 + port + hmac
                 }else if($4 != UNDEFINED && ($5.auto_conf || $5.hash != UNDEFINED)){
                         $$ = tcp_option_new(TCPOPT_MPTCP, TCPOLEN_ADD_ADDR_V4_PORT_HMAC);
-			$$->data.add_addr.ipv4_w_port.port = htons($4);
-                        $$->data.add_addr.ipv4_w_hmac.hmac = htobe64($5.hash);
+			$$->data.add_addr.ipv4_w_port_hmac.port = htons($4);
+                        $$->data.add_addr.ipv4_w_port_hmac.hmac = htobe64($5.hash);
 		}
 	// ipv4
 	}else if($3 == AF_INET && $4 == UNDEFINED && !$5.auto_conf && $5.hash == UNDEFINED){
@@ -2268,8 +2268,8 @@ tcp_option
         // ipv4 + port + hmac
         }else if($3 == AF_INET && $4 != UNDEFINED && ($5.auto_conf || $5.hash != UNDEFINED)){
                 $$ = tcp_option_new(TCPOPT_MPTCP, TCPOLEN_ADD_ADDR_V4_PORT_HMAC);
-		$$->data.add_addr.ipv4_w_port.port = htons($4);
-                $$->data.add_addr.ipv4_w_hmac.hmac = htobe64($5.hash);
+		$$->data.add_addr.ipv4_w_port_hmac.port = htons($4);
+                $$->data.add_addr.ipv4_w_port_hmac.hmac = htobe64($5.hash);
 	// ipv6
 	}else if($3 == AF_INET6 && $4 == UNDEFINED && !$5.auto_conf && $5.hash == UNDEFINED){
 		$$ = tcp_option_new(TCPOPT_MPTCP, TCPOLEN_ADD_ADDR_V6);

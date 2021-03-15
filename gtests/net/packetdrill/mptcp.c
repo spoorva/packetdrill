@@ -2053,7 +2053,7 @@ int mptcp_subtype_add_address(struct packet *packet_to_modify,
                                                            mp_state.packetdrill_key,
                                                            add_addr_live->data.add_addr.address_id,
                                                            &add_addr_live->data.add_addr.ipv4_w_port_hmac.ipv4,
-                                                           0);
+                                                           ntohs(add_addr_live->data.add_addr.ipv4_w_port_hmac.port));
 		}else if(add_addr_script->length == TCPOLEN_ADD_ADDR_V6){
 			add_addr_script->data.add_addr.ipv6 = endpoint->ip.ip.v6;
 		}else if(add_addr_script->length == TCPOLEN_ADD_ADDR_V6_PORT){
@@ -2079,7 +2079,7 @@ int mptcp_subtype_add_address(struct packet *packet_to_modify,
                                                            mp_state.packetdrill_key,
                                                            add_addr_live->data.add_addr.address_id,
                                                            &add_addr_live->data.add_addr.ipv6_w_port_hmac.ipv6,
-                                                           0);
+                                                           ntohs(add_addr_live->data.add_addr.ipv6_w_port_hmac.port));
 		}else{
 			return STATUS_ERR;
 		}
