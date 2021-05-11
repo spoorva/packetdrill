@@ -1,5 +1,5 @@
 // connection initiated by the kernel
---tolerance_usecs=100000
+--tolerance_usecs=200000
 `../common/defaults.sh`
 
 +0     `../common/client.sh`
@@ -23,11 +23,11 @@
 // explicit ACK then ADD_ADDR: on some slow env, injecting ADD_ADDR can take
 // time, causing the host to retransmit its last data packet. Here we ensure
 // this previous packet is acked then we can send the ADD_ADDR
-+0.0      <   .  1:1(0)  ack 101  win 256  <nop, nop, TS val 705 ecr 305,                                    dss dack8=101 dll=0 nocs>
-+0.0      <   .  1:1(0)  ack 101  win 256  <nop, nop, TS val 705 ecr 305, add_address addr[saddr] hmac=auto>
++0.0      <   .  1:1(0)  ack 101  win 256  <nop, nop, TS val 705 ecr 305, dss dack8=101 dll=0 nocs>
++0.0      <   .  1:1(0)  ack 101  win 256  <nop, nop, TS val 705 ecr 305, add_address address_id=11 addr[ep=inet6_addr("2001:db8::c1:a0")] hmac=auto>
 
 // ADD_ADDR echo (without hmac)
-+0.0      >   .  101:101(0)  ack 1         <nop, nop, TS val 494 ecr 700, add_address addr[saddr] addr_echo>
++0.0      >   .  101:101(0)  ack 1         <nop, nop, TS val 494 ecr 700, add_address address_id=11 addr[ep=inet6_addr("2001:db8::c1:a0")] addr_echo>
 
-+0.0 close(3) = 0
-+0.0      >   .  101:101(0)  ack 1         <nop, nop, TS val 494 ecr 700,                                    dss dack4=1   dsn8=101 ssn=0 dll=1 nocs fin, nop, nop>
++0.0    close(3) = 0
++0.0      >   .  101:101(0)  ack 1         <nop, nop, TS val 494 ecr 700, dss dack4=1 dsn8=101 ssn=0 dll=1 nocs fin, nop, nop>

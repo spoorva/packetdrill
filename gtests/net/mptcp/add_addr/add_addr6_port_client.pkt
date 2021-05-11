@@ -1,5 +1,5 @@
 // connection initiated by the kernel
---tolerance_usecs=100000
+--tolerance_usecs=200000
 `../common/defaults.sh`
 
 +0     `../common/client.sh`
@@ -18,6 +18,6 @@
 +0.205  fcntl(3, F_SETFL, O_RDWR) = 0   // set back to blocking
 
 // ADD_ADDRESS with port
-+0.0      <   .  1:1(0)  ack 1  win 256                                                         <add_address address_id=12 addr[saddr] port=4321 hmac=auto, dss dack4=1 dll=0 nocs, nop, nop>
-+0.0      >   .  1:1(0)  ack 1             <nop, nop,          TS val 100 ecr 700,               add_address address_id=12 addr[saddr] port=4321 addr_echo, nop, nop>
++0.0      <   .  1:1(0)  ack 1  win 256                                                         <add_address address_id=12 addr[ep=inet6_addr("2001:db8::c1:a0")] port=4321 hmac=auto, nop, nop>
++0.0      >   .  1:1(0)  ack 1             <nop, nop,          TS val 100 ecr 700,               add_address address_id=12 addr[ep=inet6_addr("2001:db8::c1:a0")] port=4321 addr_echo, nop, nop>
 
