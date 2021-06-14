@@ -65,7 +65,7 @@ else # ipv4 or ipv4-mapped-ipv6
     if [[ $OPT_LOCAL_IP =~ ([0-9]+[.][0-9]+[.][0-9]+[.])([0-9]+) ]]; then
         network=0
         IFS=. read a b c d <<-EOF
-       `echo $OPT_LOCAL_NETMASK`
+       `echo $OPT_NETMASK_IP`
 EOF
         for o in $d $c $b $a; do
             case $o in
