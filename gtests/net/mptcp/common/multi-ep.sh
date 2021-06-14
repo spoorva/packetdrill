@@ -69,19 +69,19 @@ else # ipv4 or ipv4-mapped-ipv6
 EOF
         for o in $d $c $b $a; do
             case $o in
-            255) b=8 ;;
-            254) b=7 ;;
-            252) b=6 ;;
-            248) b=5 ;;
-            240) b=4 ;;
-            224) b=3 ;;
-            192) b=2 ;;
-            128) b=1 ;;
-            0)   b=0 ;;
+            255) l=8 ;;
+            254) l=7 ;;
+            252) l=6 ;;
+            248) l=5 ;;
+            240) l=4 ;;
+            224) l=3 ;;
+            192) l=2 ;;
+            128) l=1 ;;
+            0)   l=0 ;;
             *) echo "invalid value for a netmask"; exit 1 ;;
             esac
-            if [ $b -lt 8 -a $network -gt 0 ]; then echo "ones are non-contiguous" 1>&2 ; exit 1; fi
-            network=$((network+b))
+            if [ $l -lt 8 -a $network -gt 0 ]; then echo "ones are non-contiguous" 1>&2 ; exit 1; fi
+            network=$((network+l))
         done
     else
         echo "Failed to parse ipv4 address: $OPT_LOCAL_IP"
