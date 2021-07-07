@@ -5,14 +5,14 @@
 
 //test 1 : Unsupported options
 0.0     socket(..., SOCK_STREAM, IPPROTO_MPTCP) = 3
-+0.0    setsockopt(3, SOL_TCP, TCP_INQ, [1], 4) = -1 ENOPROTOOPT  (Operation not supported)
-+0.0    getsockopt(3, SOL_TCP, TCP_INQ, [0], [4]) = -1 ENOPROTOOPT (Operation not supported)
++0.0    setsockopt(3, SOL_TCP, TCP_INQ, [1], 4) = -1 EOPNOTSUPP (Operation not supported)
++0.0    getsockopt(3, SOL_TCP, TCP_INQ, [0], [4]) = -1 EOPNOTSUPP (Operation not supported)
 
 
 //testing mptcp for IP_TOS 
 +0.0     socket(..., SOCK_STREAM, IPPROTO_MPTCP) = 7
-+0.0    setsockopt(7, SOL_IP, IP_TOS, [0], 4) = -1 EOPNOTSUPP (Operation not supported)
-+0.200  getsockopt(7, SOL_IP, IP_TOS, [0], [4]) = -1 EOPNOTSUPP (Operation not supported)
++0.0    setsockopt(7, SOL_IP, IP_TOS, [4], 4) = 0
++0.200  getsockopt(7, SOL_IP, IP_TOS, [4], [4]) = 0
 
 +0.0    fcntl(7, F_GETFL) = 0x2 (flags O_RDWR)
 +0.0    fcntl(7, F_SETFL, O_RDWR|O_NONBLOCK) = 0
@@ -21,10 +21,10 @@
 
 +0.0    connect(7, ..., ...) = -1 EINPROGRESS (Operation now in progress)
 
-+0.0      >  [tos 0x0] S       0:0(0)                                 <mss 1460, sackOK, TS val 100 ecr 0,   nop, wscale 8, mpcapable v1 flags[flag_h] nokey>
-+0.0      <            S.      0:0(0)        ack 1     win 65535      <mss 1460, sackOK, TS val 700 ecr 100, nop, wscale 8, mpcapable v1 flags[flag_h] key[skey=2]>
-+0.0      >  [tos 0x0] .       1:1(0)        ack 1     win 256        <nop,nop,TS val 3081837704 ecr 700, mpcapable v1 flags[flag_h] key[ckey, skey]>
++0.0      >  [tos 0x04] S       0:0(0)                                 <mss 1460, sackOK, TS val 100 ecr 0,   nop, wscale 8, mpcapable v1 flags[flag_h] nokey>
++0.0      <             S.      0:0(0)        ack 1     win 65535      <mss 1460, sackOK, TS val 700 ecr 100, nop, wscale 8, mpcapable v1 flags[flag_h] key[skey=2]>
++0.0      >  [tos 0x04] .       1:1(0)        ack 1     win 256        <nop,nop,TS val 3081837704 ecr 700, mpcapable v1 flags[flag_h] key[ckey, skey]>
 
-+0.0  fcntl(7, F_SETFL, O_RDWR) = 0   // set back to blocking
+//+0.0  fcntl(7, F_SETFL, O_RDWR) = 0   // set back to blocking
 
 
