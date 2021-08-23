@@ -1,0 +1,9 @@
+-tolerance_usecs=100000
+`../../common/defaults.sh`
+
+// test 1 : TCP_INQ is not supported by MPTCP sockets yet.
+// Follow https://github.com/multipath-tcp/mptcp_net-next/issues/224 for progress 
+// Once supported, we can replace it with gtests/net/mptcp_unsupported/mptcp_tcp_inq_client.pkt 
+0.0   socket(..., SOCK_STREAM, IPPROTO_MPTCP) = 3
++0.0  setsockopt(3, SOL_TCP, TCP_INQ, [1], 4) = -1 EOPNOTSUPP (Operation not supported)
++0.0  getsockopt(3, SOL_TCP, TCP_INQ, [0], [4]) = -1 EOPNOTSUPP (Operation not supported)
