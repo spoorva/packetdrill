@@ -19,10 +19,10 @@
 +0       >   .  1:1(0)        ack 1           <add_address address_id=1  addr[saddr0] hmac=auto>
 // send echo with wrong address, expect a retry in 1s
 +0       <   .  1:1(0)        ack 1  win 257  <add_address address_id=1  addr[ep=inet_addr("1.2.3.4")] addr_echo, dss dack4=1 ssn=1 dll=0 nocs>
-+1.0     >   .  1:1(0)        ack 1           <add_address address_id=1  addr[saddr0] hmac=auto>
++0.75    >   .  1:1(0)        ack 1           <add_address address_id=1  addr[saddr0] hmac=auto>
 // send echo with wrong id, expect a retry in 1s
 +0       <   .  1:1(0)        ack 1  win 257  <add_address address_id=90 addr[saddr0] addr_echo>
-+1.0     >   .  1:1(0)        ack 1           <add_address address_id=1  addr[saddr0] hmac=auto>
++0.75    >   .  1:1(0)        ack 1           <add_address address_id=1  addr[saddr0] hmac=auto>
 // send echo with correct id, expect no retry
 +0       <   .  1:1(0)        ack 1  win 257  <add_address address_id=1  addr[saddr0] addr_echo>
 // read and ack 1 data segment
